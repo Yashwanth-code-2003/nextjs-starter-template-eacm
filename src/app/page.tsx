@@ -1,6 +1,20 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push("/another-page"); // 🔁 change this to your target route
+    }, 15000); // 15 seconds
+
+    return () => clearTimeout(timer);
+  }, [router]);
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col items-center row-start-2 gap-8 sm:items-start">
@@ -12,6 +26,7 @@ export default function Home() {
           height={38}
           priority
         />
+
         <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2">
             Get started by editing{" "}
@@ -20,14 +35,13 @@ export default function Home() {
             </code>
             .
           </li>
-          <li>Save and see your changes instantly.</li>
+          <li>This page will auto-redirect after 15 seconds.</li>
         </ol>
 
         <div className="flex flex-col items-center gap-4 sm:flex-row">
-        
           <a
             className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="https://nextjs.org/docs"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -35,7 +49,6 @@ export default function Home() {
           </a>
         </div>
       </main>
-    
     </div>
   );
 }
