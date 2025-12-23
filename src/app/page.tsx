@@ -1,18 +1,34 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
+  const [seconds, setSeconds] = useState(15);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push("/"); // 🔁 change this to your target route
-    }, 15000); // 15 seconds
+    // countdown timer
+    const interval = setInterval(() => {
+      setSeconds((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
-    return () => clearTimeout(timer);
+    // redirect after 15 seconds
+    const timer = setTimeout(() => {
+      router.push("/dashboard"); // ✅ change if needed
+    }, 15000);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   }, [router]);
 
   return (
@@ -33,9 +49,10 @@ export default function Home() {
             <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
               src/app/page.tsx
             </code>
-            .
           </li>
-          <li>This page will auto-redirect after 15 seconds.</li>
+          <li>
+            Redirecting in <strong>{seconds}</strong> seconds...
+          </li>
         </ol>
 
         <div className="flex flex-col items-center gap-4 sm:flex-row">
