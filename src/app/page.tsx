@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/another-page"); // 🔁 change this to your target route
+      router.push("/"); // 🔁 change this to your target route
     }, 15000); // 15 seconds
 
     return () => clearTimeout(timer);
